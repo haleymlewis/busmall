@@ -10,7 +10,7 @@ Developer Team -
 * As a developer, I want to ensure my code is clear and easy to read, so that I can iterate on it as needed by my other team members.
 
 Focus Group Participant - 
-* As a focus group participant, 
-* As a focus group participant, 
-* As a focus group participant, 
-* As a focus group participant, 
+* As a focus group participant, I want to feel like my participation has value so that I am inspired to continue providing feedback.
+* As a focus group participant, I want the app to be clean and easily understood, so that I am inspired to continue providing feedback.
+* As a focus group participant, I want the product selection process to be easy to understand, so that I am not frustrated into quitting before I have finished providing input.
+* As a focus group participant, I want to be able to see additional information about each product, so I can ensure I am making educated selections.
