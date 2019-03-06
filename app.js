@@ -25,7 +25,7 @@ new RandomProducts('assets/boots.jpg', 'Toeless Rainboots');
 new RandomProducts('assets/breakfast.jpg', 'Breakfast All-in-One');
 new RandomProducts('assets/bubblegum.jpg', 'Meatball Bubblegum');
 new RandomProducts('assets/chair.jpg', 'Impractical Chair');
-new RandomProducts('assets/cthulu.jpg', 'Cthulu Action Figure');
+new RandomProducts('assets/cthulhu.jpg', 'Cthulu Action Figure');
 new RandomProducts('assets/dog-duck.jpg', 'Pet Beak');
 new RandomProducts('assets/dragon.jpg', 'Dragon Meat');
 new RandomProducts('assets/pen.jpg', 'U-Pen-sils');
@@ -81,24 +81,3 @@ function handleClick(event){
   console.log('target, ', event.target);
   showRandomProducts();
 }
-
-// function handleClick(event) {
-//   console.log('target, ', event.target);
-//   if (turnCount < 26) {
-//     increaseClickCount(event.target.title);
-//     oneRound();
-//   } else if (turnCount === 26){
-//     createList();
-//   } else {
-//     return;
-//   }
-// }
-
-// function increaseClickCount(title) {
-//   for (var i = 0; i <allProducts.length; i++) {
-//     if (allProducts[i].displayName === title) {
-//       allProducts[i].clicks++;
-//       break;
-//     }
-//   }
-// }

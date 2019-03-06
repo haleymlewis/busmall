@@ -1,0 +1,18 @@
+body {
+    background-color: black;
+    color: white;
+    margin: auto;
+    max-width: 950px;
+}
+
+header, main {
+    margin: auto;
+}
+
+.image-container {
+    object-fit: contain;
+}
+
+img {
+    width: 300px;
+}
