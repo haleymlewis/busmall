@@ -9,13 +9,12 @@ var allProducts = [];
 
 // var clickCount = 0;
 
-function RandomProducts(filepath,name) {
+function RandomProducts(filepath, name) {
   // this.displayName = displayName;
-  this.filepath =  filepath; //`assets/${name}`;
+  this.filepath = filepath; //`assets/${name}`;
   this.name = name;
   this.clicks = 0;
   this.views = 0;
-  
   allProducts.push(this);
 }
 
@@ -43,7 +42,9 @@ new RandomProducts('assets/wine-glass.jpg', 'Impractical Wine Glass');
 
 function showRandomProducts(){  
   var random1 = Math.floor(Math.random() * allProducts.length);
+  console.log(allProducts[random1].filepath);
 
+  // leftPic.src = allProducts[random1].filepath;
   leftPic.src = allProducts[random1].filepath;
   leftPic.alt = allProducts[random1].name;
   leftPic.title = allProducts[random1].name;
