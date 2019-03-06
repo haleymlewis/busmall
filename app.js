@@ -1,8 +1,8 @@
 'use strict';
 
-var leftPic = document.getElementById('1st-image');
-var middlePic = document.getElementById('2nd-image');
-var rightPic = document.getElementById('3rd-image');
+var leftPic = document.getElementById('left-image');
+var middlePic = document.getElementById('middle-image');
+var rightPic = document.getElementById('right-image');
 
 var allProducts = [];
 // var currentProducts = [];
