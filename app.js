@@ -3,15 +3,13 @@
 var leftPic = document.getElementById('left-image');
 var middlePic = document.getElementById('middle-image');
 var rightPic = document.getElementById('right-image');
+var imgContainer = document.getElementById('image-container');
 
 var allProducts = [];
-// var currentProducts = [];
-
-// var clickCount = 0;
+var clickCount = 0;
 
 function RandomProducts(filepath, name) {
-  // this.displayName = displayName;
-  this.filepath = filepath; //`assets/${name}`;
+  this.filepath = filepath;
   this.name = name;
   this.clicks = 0;
   this.views = 0;
@@ -39,16 +37,17 @@ new RandomProducts('assets/usb.gif', 'Tenticle USB');
 new RandomProducts('assets/water-can.jpg', 'Impractical Watering Can');
 new RandomProducts('assets/wine-glass.jpg', 'Impractical Wine Glass');
 
+allProducts.justViewed = [];
+allProducts.pics = [document.getElementById('left-image'), document.getElementById('middle-image'), document.getElementById('right-image')];
+allProducts.tally = document.getElementById('tally');
 
 function showRandomProducts(){  
   var random1 = Math.floor(Math.random() * allProducts.length);
-  console.log(allProducts[random1].filepath);
-
-  // leftPic.src = allProducts[random1].filepath;
   leftPic.src = allProducts[random1].filepath;
   leftPic.alt = allProducts[random1].name;
   leftPic.title = allProducts[random1].name;
   allProducts[random1].views++;
+  console.log('random1 views: ' + allProducts[random1].views);
   ///// To ensure all product images are different /////
   var random2 = Math.floor(Math.random() * allProducts.length);
   while (random2 === random1){
@@ -59,6 +58,7 @@ function showRandomProducts(){
   middlePic.alt = allProducts[random2].name;
   middlePic.title = allProducts[random2].name;
   allProducts[random2].views++;
+  console.log('random2 views: ' + allProducts[random2].views);
   ///// To ensure all product images are different /////
   var random3 = Math.floor(Math.random() * allProducts.length);
   while (random3 === random1 || random3 === random2){
@@ -69,15 +69,31 @@ function showRandomProducts(){
   rightPic.alt = allProducts[random3].name;
   rightPic.title = allProducts[random3].name;
   allProducts[random3].views++;
+  console.log('random3 views: ' + allProducts[random3].views);
 }
 
-showRandomProducts();
+function handleClick(event){
+  ////// Make the clicks stop at 25 //////
+  if(clickCount > 24) {
+    imgContainer.removeEventListener('click', handleClick);
+  }
+  /////// Direct the user to click on a specific image /////
+  if(event.target.id === 'image-container') {
+    return alert('Please select an image.');
+  }
+  for(var i = 0; i < allProducts.length; i++) {
+    if(event.target.id === allProducts[i].name) {
+      allProducts[i].votes++;
+      allProducts[i].clicks++;
+      clickCount++;
+    }
+    console.log('Click Counter: ' + clickCount);
+  }
+  showRandomProducts();
+}
 
 leftPic.addEventListener('click', handleClick);
 middlePic.addEventListener('click', handleClick);
 rightPic.addEventListener('click', handleClick);
 
-function handleClick(event){
-  console.log('target, ', event.target);
-  showRandomProducts();
-}
+showRandomProducts();
