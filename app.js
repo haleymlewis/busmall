@@ -41,14 +41,14 @@ allProducts.justViewed = [];
 allProducts.pics = [document.getElementById('left-image'), document.getElementById('middle-image'), document.getElementById('right-image')];
 allProducts.tally = document.getElementById('tally');
 
-function showRandomProducts(){  
+function showRandomProducts() {  
   var random1 = Math.floor(Math.random() * allProducts.length);
   leftPic.src = allProducts[random1].filepath;
   leftPic.alt = allProducts[random1].name;
   leftPic.title = allProducts[random1].name;
   allProducts[random1].views++;
-  console.log('random1 views: ' + allProducts[random1].views);
-  ///// To ensure all product images are different /////
+  console.log(allProducts.name, allProducts[random1].views);
+  ///// To ensure random2 is different than random1 /////
   var random2 = Math.floor(Math.random() * allProducts.length);
   while (random2 === random1){
     random2 = Math.floor(Math.random() * allProducts.length);
@@ -58,8 +58,8 @@ function showRandomProducts(){
   middlePic.alt = allProducts[random2].name;
   middlePic.title = allProducts[random2].name;
   allProducts[random2].views++;
-  console.log('random2 views: ' + allProducts[random2].views);
-  ///// To ensure all product images are different /////
+  console.log(allProducts.name, allProducts[random2].views);
+  ///// To ensure random3 is different than random2 and random1 /////
   var random3 = Math.floor(Math.random() * allProducts.length);
   while (random3 === random1 || random3 === random2){
     random3 = Math.floor(Math.random() * allProducts.length);
@@ -69,12 +69,17 @@ function showRandomProducts(){
   rightPic.alt = allProducts[random3].name;
   rightPic.title = allProducts[random3].name;
   allProducts[random3].views++;
-  console.log('random3 views: ' + allProducts[random3].views);
+  console.log(allProducts.name, allProducts[random3].views);
 }
+
+
+leftPic.addEventListener('click', handleClick);
+middlePic.addEventListener('click', handleClick);
+rightPic.addEventListener('click', handleClick);
 
 function handleClick(event){
   ////// Make the clicks stop at 25 //////
-  if(clickCount > 24) {
+  if(RandomProducts.clicks > 24) {
     imgContainer.removeEventListener('click', handleClick);
   }
   /////// Direct the user to click on a specific image /////
@@ -91,9 +96,5 @@ function handleClick(event){
   }
   showRandomProducts();
 }
-
-leftPic.addEventListener('click', handleClick);
-middlePic.addEventListener('click', handleClick);
-rightPic.addEventListener('click', handleClick);
 
 showRandomProducts();
