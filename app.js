@@ -1,17 +1,19 @@
 'use strict';
 
-var leftPic = document.getElementById('1st-image');
-var middlePic = document.getElementById('2nd-image');
-var rightPic = document.getElementById('3rd-image');
+var leftPic = document.getElementById('left-image');
+// var leftPicText = document.getElementById('left-img-text');
+var middlePic = document.getElementById('middle-image');
+// var middlePicText = document.getElementById('middle-img-text');
+var rightPic = document.getElementById('right-image');
+// var rightPicText = document.getElementById('right-img-text');
+var imgContainer = document.getElementById('image-container');
 
 var allProducts = [];
-// var currentProducts = [];
-
-// var clickCount = 0;
+var lastViewed = [];
+var clickCount = 0;
 
 function RandomProducts(filepath, name) {
-  // this.displayName = displayName;
-  this.filepath = filepath; //`assets/${name}`;
+  this.filepath = filepath;
   this.name = name;
   this.clicks = 0;
   this.views = 0;
@@ -25,7 +27,7 @@ new RandomProducts('assets/boots.jpg', 'Toeless Rainboots');
 new RandomProducts('assets/breakfast.jpg', 'Breakfast All-in-One');
 new RandomProducts('assets/bubblegum.jpg', 'Meatball Bubblegum');
 new RandomProducts('assets/chair.jpg', 'Impractical Chair');
-new RandomProducts('assets/cthulu.jpg', 'Cthulu Action Figure');
+new RandomProducts('assets/cthulhu.jpg', 'Cthulu Action Figure');
 new RandomProducts('assets/dog-duck.jpg', 'Pet Beak');
 new RandomProducts('assets/dragon.jpg', 'Dragon Meat');
 new RandomProducts('assets/pen.jpg', 'U-Pen-sils');
@@ -39,19 +41,19 @@ new RandomProducts('assets/usb.gif', 'Tenticle USB');
 new RandomProducts('assets/water-can.jpg', 'Impractical Watering Can');
 new RandomProducts('assets/wine-glass.jpg', 'Impractical Wine Glass');
 
+// allProducts.pics = [document.getElementById('left-image'), document.getElementById('middle-image'), document.getElementById('right-image')];
+// allProducts.tally = document.getElementById('tally');
 
-function showRandomProducts(){  
+function showRandomProducts() {
   var random1 = Math.floor(Math.random() * allProducts.length);
-  console.log(allProducts[random1].filepath);
-
-  // leftPic.src = allProducts[random1].filepath;
   leftPic.src = allProducts[random1].filepath;
   leftPic.alt = allProducts[random1].name;
   leftPic.title = allProducts[random1].name;
   allProducts[random1].views++;
-  ///// To ensure all product images are different /////
+  console.log(allProducts.name, allProducts[random1].views);
+  ///// To ensure random2 is different than random1 /////
   var random2 = Math.floor(Math.random() * allProducts.length);
-  while (random2 === random1){
+  while (random2 === random1) {
     random2 = Math.floor(Math.random() * allProducts.length);
   }
 
@@ -59,9 +61,10 @@ function showRandomProducts(){
   middlePic.alt = allProducts[random2].name;
   middlePic.title = allProducts[random2].name;
   allProducts[random2].views++;
-  ///// To ensure all product images are different /////
+  console.log(allProducts.name, allProducts[random2].views);
+  ///// To ensure random3 is different than random2 and random1 /////
   var random3 = Math.floor(Math.random() * allProducts.length);
-  while (random3 === random1 || random3 === random2){
+  while (random3 === random1 || random3 === random2) {
     random3 = Math.floor(Math.random() * allProducts.length);
   }
 
@@ -69,36 +72,86 @@ function showRandomProducts(){
   rightPic.alt = allProducts[random3].name;
   rightPic.title = allProducts[random3].name;
   allProducts[random3].views++;
+  console.log(allProducts.name, allProducts[random3].views);
 }
 
-showRandomProducts();
 
 leftPic.addEventListener('click', handleClick);
 middlePic.addEventListener('click', handleClick);
 rightPic.addEventListener('click', handleClick);
 
-function handleClick(event){
-  console.log('target, ', event.target);
+///// Nicole Inspired handleClick /////
+// function handleClick(event) {
+//   if (event.target.id === 'left-image' || event.target.id === 'middle-image' || event.target.id === 'right-image') {
+//     var random1 = Math.floor(Math.random() * allItems.length);
+//     var random2 = Math.floor(Math.random() * allItems.length);
+//     var random3 = Math.floor(Math.random() * allItems.length);
+
+//     while (lastViewed.includes(random1) || lastViewed.includes(random2) || lastViewed.includes(random3) || random1 === random2 || random2 === random3 || random3 === random1) {
+//       random1 = Math.floor(Math.random() * allProducts.length);
+//       random2 = Math.floor(Math.random() * allProducts.length);
+//       random3 = Math.floor(Math.random() * allProducts.length);
+//     }
+//     lastViewed[0] = random1;
+//     lastViewed[1] = random2;
+//     lastViewed[2] = random3;
+
+//     if (event.target.id === 'left-image') {
+//       allProducts[random1].clicks++;
+//     } else if (event.target.id === 'middle-image') {
+//       allProducts[random2].clicks++;
+//     } else {
+//       allProducts[random3].clicks++;
+//     }
+
+//     allProducts[random1].views++;
+//     allProducts[random2].views++;
+//     allProducts[random3].views++;
+
+//     leftPic.src = allProducts[random1].src;
+//     middlePic.src = allProducts[random2].src;
+//     rightPic.src = allProducts[random3].src;
+
+//     leftPicText.textContent = allProducts[random1].name;
+//     middlePicText.textContent = allProducts[random2].name;
+//     rightPicText.textContent = allProducts[random3].name;
+
+//     clickCount++;
+//   }
+//   console.log('')
+// }
+
+function handleClick(event) {
+  ////// Make the clicks stop at 25 //////
+  if (allProducts.clicks > 24) {
+    imgContainer.removeEventListener('click', handleClick);
+  }
+  /////// Direct the user to click on a specific image /////
+  if (event.target.id === 'image-container') {
+    return alert('Please select an image.');
+  }
+  for (var i = 0; i < allProducts.length; i++) {
+    if (event.target.id === 'left-image') {
+      allProducts[random1].clicks++;
+      allProducts[random1].views++;
+    } else if (event.target.id === 'middle-image') {
+      allProducts[random2].clicks++; 
+      allProducts[random2].views++;
+    } else {
+      allProducts[random3].clicks++;
+      allProducts[random3].views++;
+    }
+
+    if(event.target.id === allProducts[i].name) {
+      allProducts[i].votes++;
+      allProducts[i].clicks++;
+      clickCount++;
+      console.log('test votes: ' + allProducts[i].votes);
+      console.log('test clicks: ' + allProducts[i].votes);
+    }
+    console.log('Click Counter: ' + clickCount);
+  }
   showRandomProducts();
 }
 
-// function handleClick(event) {
-//   console.log('target, ', event.target);
-//   if (turnCount < 26) {
-//     increaseClickCount(event.target.title);
-//     oneRound();
-//   } else if (turnCount === 26){
-//     createList();
-//   } else {
-//     return;
-//   }
-// }
-
-// function increaseClickCount(title) {
-//   for (var i = 0; i <allProducts.length; i++) {
-//     if (allProducts[i].displayName === title) {
-//       allProducts[i].clicks++;
-//       break;
-//     }
-//   }
-// }
+showRandomProducts();
