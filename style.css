@@ -2,7 +2,7 @@ body {
     background-color: black;
     color: white;
     margin: auto;
-    max-width: 950px;
+    max-width: 1000px;
 }
 
 header, main {
@@ -14,4 +14,6 @@ img {
     width: 300px;
     height: 300px;
     background-color: white;
+    margin-left: 5px;
+    margin-right: px;
 }
