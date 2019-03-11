@@ -14,6 +14,10 @@ var clickCount = 0;
 
 var chartDrawn = false;
 
+var random1 = 0;
+var random2 = 0;
+var random3 = 0;
+
 function RandomProducts(filepath, name) {
   this.filepath = filepath;
   this.name = name;
@@ -47,14 +51,14 @@ new RandomProducts('assets/wine-glass.jpg', 'Impractical Wine Glass');
 // allProducts.tally = document.getElementById('tally');
 
 function showRandomProducts() {
-  var random1 = Math.floor(Math.random() * allProducts.length);
+  random1 = Math.floor(Math.random() * allProducts.length);
   leftPic.src = allProducts[random1].filepath;
   leftPic.alt = allProducts[random1].name;
   leftPic.title = allProducts[random1].name;
   allProducts[random1].views++;
-  console.log(allProducts.name, allProducts[random1].views);
+  console.log(RandomProducts.name, allProducts[random1].views);
   ///// To ensure random2 is different than random1 /////
-  var random2 = Math.floor(Math.random() * allProducts.length);
+  random2 = Math.floor(Math.random() * allProducts.length);
   while (random2 === random1) {
     random2 = Math.floor(Math.random() * allProducts.length);
   }
@@ -63,9 +67,9 @@ function showRandomProducts() {
   middlePic.alt = allProducts[random2].name;
   middlePic.title = allProducts[random2].name;
   allProducts[random2].views++;
-  console.log(allProducts.name, allProducts[random2].views);
+  console.log(RandomProducts.name, allProducts[random2].views);
   ///// To ensure random3 is different than random2 and random1 /////
-  var random3 = Math.floor(Math.random() * allProducts.length);
+  random3 = Math.floor(Math.random() * allProducts.length);
   while (random3 === random1 || random3 === random2) {
     random3 = Math.floor(Math.random() * allProducts.length);
   }
@@ -74,19 +78,16 @@ function showRandomProducts() {
   rightPic.alt = allProducts[random3].name;
   rightPic.title = allProducts[random3].name;
   allProducts[random3].views++;
-  console.log(allProducts.name, allProducts[random3].views);
+  console.log(RandomProducts.name, allProducts[random3].views);
 }
 
-
-leftPic.addEventListener('click', handleClick);
-middlePic.addEventListener('click', handleClick);
-rightPic.addEventListener('click', handleClick);
+if (clickCount <= 25) {
+  leftPic.addEventListener('click', handleClick);
+  middlePic.addEventListener('click', handleClick);
+  rightPic.addEventListener('click', handleClick);
+}
 
 function handleClick(event) {
-  ////// Make the clicks stop at 25 //////
-  if (allProducts.clicks > 24) {
-    imgContainer.removeEventListener('click', handleClick);
-  }
   /////// Direct the user to click on a specific image /////
   if (event.target.id === 'image-container') {
     return alert('Please select an image.');
@@ -94,22 +95,26 @@ function handleClick(event) {
   for (var i = 0; i < allProducts.length; i++) {
     if (event.target.id === 'left-image') {
       allProducts[random1].clicks++;
+      // clickCount++;
       allProducts[random1].views++;
     } else if (event.target.id === 'middle-image') {
-      allProducts[random2].clicks++; 
+      allProducts[random2].clicks++;
+      // clickCount++;
       allProducts[random2].views++;
     } else {
       allProducts[random3].clicks++;
+      // clickCount++;
       allProducts[random3].views++;
     }
 
-    if(event.target.id === allProducts[i].name) {
+    if (event.target.id === allProducts[i].name) {
       allProducts[i].votes++;
       allProducts[i].clicks++;
-      clickCount++;
-      console.log('test votes: ' + allProducts[i].votes);
-      console.log('test clicks: ' + allProducts[i].votes);
+
     }
+    
+    console.log('test votes: ' + allProducts[i].votes);
+    console.log('test clicks: ' + allProducts[i].clicks);
     console.log('Click Counter: ' + clickCount);
   }
   showRandomProducts();
@@ -117,6 +122,7 @@ function handleClick(event) {
 
 showRandomProducts();
 
+/////////////// ********** CHART CODE ************* ///////////////////
 
 function updateChartArrays() {
   for (var i = 0; i < allProducts.length; i++) {
@@ -125,16 +131,16 @@ function updateChartArrays() {
   }
 }
 
-function showProductsAsList () {
+function showProductsAsList() {
   var itemList = document.getElementById('product-list');
 
   itemList.innerHTML = '';
 
-  for (var i = 0; i < allProducts.length; i++){
+  for (var i = 0; i < allProducts.length; i++) {
     var liEl = document.createElement('li');
     liEl.textContent = allProducts[i].name + ', ' + allProducts[i].clicks + ' votes';
     itemList.appendChild(liEl);
-  } 
+  }
 }
 
 function tallyVote(thisItem) {
@@ -150,7 +156,7 @@ var data = {
   labels: name,
   datasets: [
     {
-      data: clicks,
+      data: RandomProducts.clicks,
       backgroundColor: [
         'rgba(255, 99, 132, 0.2)',
         'rgba(54, 162, 235, 0.2)',
@@ -166,7 +172,7 @@ var data = {
 function drawChart() {
   var ctx = document.getElementById("myChart").getContext("2d");
 
-  productChart = new Chart(ctx, {
+  var productChart = new Chart(ctx, {
     type: 'horizontalBar',
     data: data,
     options: {
@@ -194,70 +200,23 @@ function drawChart() {
   });
 
   chartDrawn = true;
-} 
+}
 
-document.getElementById('draw-chart').addEventListener('click', function(){
+document.getElementById('myChart').addEventListener('click', function () {
   if (chartDrawn) {
     productChart.update();
   }
   drawChart();
 });
 
-document.getElementById('voting').addEventListener('click', function(event) {
-  tallyVote(event.target.id);
-  if (chartDrawn) {
-    productChart.update();
-  }
-});
-
-document.getElementById('list-button').addEventListener('click', function(){
-  showProductsAsList();
-});
-
-
-
-
-
-
-
-
-///// Nicole Inspired handleClick /////
-// function handleClick(event) {
-//   if (event.target.id === 'left-image' || event.target.id === 'middle-image' || event.target.id === 'right-image') {
-//     var random1 = Math.floor(Math.random() * allItems.length);
-//     var random2 = Math.floor(Math.random() * allItems.length);
-//     var random3 = Math.floor(Math.random() * allItems.length);
-
-//     while (lastViewed.includes(random1) || lastViewed.includes(random2) || lastViewed.includes(random3) || random1 === random2 || random2 === random3 || random3 === random1) {
-//       random1 = Math.floor(Math.random() * allProducts.length);
-//       random2 = Math.floor(Math.random() * allProducts.length);
-//       random3 = Math.floor(Math.random() * allProducts.length);
-//     }
-//     lastViewed[0] = random1;
-//     lastViewed[1] = random2;
-//     lastViewed[2] = random3;
-
-//     if (event.target.id === 'left-image') {
-//       allProducts[random1].clicks++;
-//     } else if (event.target.id === 'middle-image') {
-//       allProducts[random2].clicks++;
-//     } else {
-//       allProducts[random3].clicks++;
-//     }
-
-//     allProducts[random1].views++;
-//     allProducts[random2].views++;
-//     allProducts[random3].views++;
-
-//     leftPic.src = allProducts[random1].src;
-//     middlePic.src = allProducts[random2].src;
-//     rightPic.src = allProducts[random3].src;
-
-//     leftPicText.textContent = allProducts[random1].name;
-//     middlePicText.textContent = allProducts[random2].name;
-//     rightPicText.textContent = allProducts[random3].name;
-
-//     clickCount++;
+// document.getElementById('tally').addEventListener('click', function(event) {
+//   tallyVote(event.target.id);
+//   if (chartDrawn) {
+//     productChart.update();
 //   }
-//   console.log('')
-// }
+// });
+
+// document.getElementById('list-button').addEventListener('click', function(){
+//   showProductsAsList();
+// });
+
