@@ -220,3 +220,35 @@ document.getElementById('myChart').addEventListener('click', function () {
 //   showProductsAsList();
 // });
 
+//////////////////// *************** LOCAL STORAGE CODE ***************** ////////////////////////
+// JSON.stringify();  turns some variable into a string.
+// JSON.parse(); turns the string back into the var.
+// localStorage.getItem(); retrievs stuff from local storage.
+// localStorage.setItem(); stores stuff in local storage.
+
+var foo = {
+  foo: 1,
+  bar: 2,
+  baz: 3
+};
+
+
+// console.log('foo ', typeof foo);
+
+var fooString = JSON.stringify(foo);
+// console.log('type of fooString, ', typeof fooString);
+
+localStorage.setItem('ourThing', fooString);
+// localStorage.ourThing = fooString;
+
+var retrievedData = localStorage.getItem('ourThing');
+// var retrievedData2 = localStorage.ourThing
+
+var retrievedDataParsed = JSON.parse(retrievedData);
+
+// console.log('retrievedDataParsed, ', retrievedDataParsed);
+
+
+
+// var fooStringObject = JSON.parse(fooString);
+// console.log('type of fooStringObject,', typeof fooStringObject);
