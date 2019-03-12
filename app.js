@@ -47,7 +47,7 @@ new RandomProducts('Impractical Wine Glass', 'assets/wine-glass.jpg');
 
 function randomizeProducts() {
   random1 = Math.floor(Math.random() * allProducts.length);
-}
+};
 
 fucntion showRandomProducts() {
   var imageLeft = randomizeProducts();
@@ -73,7 +73,7 @@ fucntion showRandomProducts() {
   var rightPic = document.getElementById('right-image');
   rightPic.src = allProducts[imageRight].filepath;
   rightPic.alt = allProducts[imageRight].name;
-}
+};
 
 showRandomProducts();
 
