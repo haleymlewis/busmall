@@ -1,17 +1,15 @@
 'use strict';
 
 var imgContainer = document.getElementById('image-container');
-var results = document.getElementById('resultsbutton');
+var resultsbutton = document.getElementById('resultsbutton');
 
 var allProducts = [];
-var itemLabels = [];
-var clickCount = [];
-
-var chartDrawn = false;
+var voteLabels = [];
+var numberOfClicks = [];
 
 var random1 = 0;
-var random2 = 0;
-var random3 = 0;
+// var random2 = 0;
+// var random3 = 0;
 
 function RandomProducts(filepath, name) {
   this.name = name;
@@ -46,10 +44,10 @@ new RandomProducts('Impractical Wine Glass', 'assets/wine-glass.jpg');
 // allProducts.tally = document.getElementById('tally');
 
 function randomizeProducts() {
-  random1 = Math.floor(Math.random() * allProducts.length);
-};
+  var random1 = Math.floor(Math.random() * allProducts.length);
+}
 
-fucntion showRandomProducts() {
+function showRandomProducts() {
   var imageLeft = randomizeProducts();
   var imageCenter = randomizeProducts();
   var imageRight = randomizeProducts();
@@ -73,7 +71,7 @@ fucntion showRandomProducts() {
   var rightPic = document.getElementById('right-image');
   rightPic.src = allProducts[imageRight].filepath;
   rightPic.alt = allProducts[imageRight].name;
-};
+}
 
 showRandomProducts();
 
@@ -82,9 +80,9 @@ function clicks(event) {
   var imageAlt = event.target.alt;
 
   if (imageId === imgContainer) {
-    alert('Please select a product to vote!')
+    alert('Please select a product to vote!');
   } else if (numberOfClicks < 25) {
-    for (var i = o; i < allProducts.length; i++) {
+    for (var i = 0; i < allProducts.length; i++) {
       if(imageAlt === allProducts[i].name) {
         allProducts[i].votes++;
         numberOfClicks++;
@@ -92,16 +90,16 @@ function clicks(event) {
       if (numberOfClicks === 25) {
         document.getElementById('resultsbutton');
         resultsbutton.style.visibility = 'hidden';
-        showRandomProducts
+        showRandomProducts();
       }
     }
   }
 }
 
 function updateChart() {
-  for (var i = o; i < allProducts.length; i++) {
-    itemLabels.push(allProducts[i].name);
-    clickCount.push(allProducts[i].votes);
+  for (var i = 0; i < allProducts.length; i++) {
+    voteLabels.push(allProducts[i].name);
+    numberOfClicks.push(allProducts[i].votes);
   }
 }
 
@@ -112,7 +110,7 @@ function makeChart () {
   var chart = new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: itemLabels,
+      labels: voteLabels,
       datasets: [{
         label: 'Product Survey Results',
         data: voteLabels,
@@ -141,7 +139,7 @@ function makeChart () {
 }
 
 imgContainer.addEventListener('click', clicks);
-results.addEventListener('click', makeChart);
+resultsbutton.addEventListener('click', makeChart);
 
 ////////// Code Graveyard //////////////
 
@@ -171,7 +169,7 @@ results.addEventListener('click', makeChart);
 //   console.log(RandomProducts.name, allProducts[random3].views);
 // }
 
-// if (clickCount <= 25) {
+// if (numberOfClicks <= 25) {
 //   leftPic.addEventListener('click', handleClick);
 //   middlePic.addEventListener('click', handleClick);
 //   rightPic.addEventListener('click', handleClick);
@@ -185,15 +183,15 @@ results.addEventListener('click', makeChart);
 //   for (var i = 0; i < allProducts.length; i++) {
 //     if (event.target.id === 'left-image') {
 //       allProducts[random1].clicks++;
-//       // clickCount++;
+//       // numberOfClicks++;
 //       allProducts[random1].views++;
 //     } else if (event.target.id === 'middle-image') {
 //       allProducts[random2].clicks++;
-//       // clickCount++;
+//       // numberOfClicks++;
 //       allProducts[random2].views++;
 //     } else {
 //       allProducts[random3].clicks++;
-//       // clickCount++;
+//       // numberOfClicks++;
 //       allProducts[random3].views++;
 //     }
 
@@ -205,7 +203,7 @@ results.addEventListener('click', makeChart);
     
 //     console.log('test votes: ' + allProducts[i].votes);
 //     console.log('test clicks: ' + allProducts[i].clicks);
-//     console.log('Click Counter: ' + clickCount);
+//     console.log('Click Counter: ' + numberOfClicks);
 //   }
 //   showRandomProducts();
 // }
